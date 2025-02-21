@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  let searchIndex;
+
+  // Load the search index
+  fetch('search-index.json')
+    .then(response => response.json())
+    .then(data => {
+      searchIndex = lunr(function () {
+        this.ref('url');
+        this.field('title');
+        this.field('content');
+
+        data.forEach(doc => {
+          this.add(doc);
+        });
+      });
+    });
+
+  // Handle search input
+  document.getElementById('search-box').addEventListener('input', function (e) {
+    const query = e.target.value;
+    const results = searchIndex.search(query);
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = '';
+
+    results.forEach(result => {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = result.ref;
+      link.textContent = result.ref;
+      item.appendChild(link);
+      resultsContainer.appendChild(item);
+    });
+  });
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Highlights & Matches</title>
+    <link rel="stylesheet" href="styles.css">
+<meta name="description" content="Latest football highlights, match schedules, and previews. Stay updated with the best football content.">
+<meta name="keywords" content="football, highlights, matches, previews, soccer">
+</head>
+<body>
+    <header>
+        <h1>Football Highlights & Matches</h1>
+        <nav>
+            <ul>
+                <li><a href="#highlights">Highlights</a></li>
+                <li><a href="#matches">Matches</a></li>
+                <li><a href="#previews">Previews</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="highlights">
+        <h2>Latest Highlights</h2>
+        <div class="image-container">
+            <div class="highlight-item">
+                
+                <p>Team A scores a stunning goal in the 90th minute!</p>
+            </div>
+            <div class="highlight-item">
+                
+                <p>Team B's goalkeeper makes an incredible save.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="matches">
+        <h2>Upcoming Matches</h2>
+        <ul>
+            <li>Match 1: Team A vs Team B - 20th Feb 2025</li>
+            <li>Match 2: Team C vs Team D - 21st Feb 2025</li>
+            <li>Match 3: Team E vs Team F - 22nd Feb 2025</li>
+        </ul>
+    </section>
+
+    <section id="previews">
+        <h2>Match Previews</h2>
+        <article>
+            <h3>Team A vs Team B</h3>
+            
+            <p>Team A is in great form, but Team B's defense is solid. Expect a close match!</p>
+        </article>
+        <article>
+            <h3>Team C vs Team D</h3>
+            
+            <p>Team C's attacking lineup will face Team D's strong midfield. Who will dominate?</p>
+        </article>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Football Highlights & Matches</p>
+    </footer>
+<!-- Facebook/Open Graph -->
+<meta property="og:title" content="Football Highlights & Previews">
+<meta property="og:description" content="Latest football highlights and match previews.">
+<meta property="og:image" content="https://yourwebsite.com/logo.jpg">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Football Highlights & Previews">
+<meta name="twitter:description" content="Latest football highlights and match previews.">
+<meta name="twitter:image" content="https://yourwebsite.com/logo.jpg">
+    <script src="script.js"></script>
+</body>
+</html>
